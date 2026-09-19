@@ -227,28 +227,78 @@
 
     function generateBulletPoints() {
       const bullets = [];
-      const usedVerbs = new Set();
-      const usedAchievements = new Set();
 
+      // Completely unique bullet structures - NO "initiatives" or template phrases
+      const bulletTemplates = [
+        // Bullet 1: Spearheaded the development...
+        () => {
+          const subjects = [
+            'cloud-native microservices platform',
+            'real-time analytics engine',
+            'distributed transaction system',
+            'high-performance API gateway',
+            'machine learning data pipeline',
+            'event-driven event processing system'
+          ];
+          const results = [
+            'reducing infrastructure costs by 45% while improving system reliability',
+            'enabling 500K+ concurrent users with sub-100ms latency',
+            'cutting query response time from 5s to 200ms across production',
+            'supporting 10M+ daily transactions with 99.99% uptime',
+            'improving customer experience with real-time insights',
+            'delivering 3x faster feature velocity compared to legacy systems'
+          ];
+          const subject = subjects[Math.floor(Math.random() * subjects.length)];
+          const result = results[Math.floor(Math.random() * results.length)];
+          return `Spearheaded the development of a ${subject}, ${result}.`;
+        },
+
+        // Bullet 2: Accelerated application scaling...
+        () => {
+          const scales = [
+            'horizontal infrastructure to handle 100x peak traffic during peak seasons',
+            'database query optimization reducing MTTR by 70% and improving availability',
+            'containerized deployment framework enabling zero-downtime releases',
+            'caching layer strategy reducing database load by 60% across all services',
+            'CI/CD pipeline automation cutting deployment cycles from days to minutes'
+          ];
+          const impacts = [
+            'supporting aggressive growth roadmap and market expansion',
+            'enabling rapid iteration cycles and accelerated feature shipping',
+            'maintaining performance SLAs throughout hypergrowth phase',
+            'driving operational efficiency savings of $2M+ annually',
+            'establishing engineering team velocity as competitive advantage'
+          ];
+          const scale = scales[Math.floor(Math.random() * scales.length)];
+          const impact = impacts[Math.floor(Math.random() * impacts.length)];
+          return `Accelerated application scaling by ${scale}, ${impact}.`;
+        },
+
+        // Bullet 3: Optimized real-time execution...
+        () => {
+          const optimizations = [
+            'algorithm complexity from O(n²) to O(log n), processing 1M+ events per second',
+            'memory footprint by 65% through strategic data structure refactoring',
+            'API response times by 75% using edge computing and intelligent caching',
+            'database schema for analytics workloads, enabling real-time reporting',
+            'frontend bundle size by 40%, improving Core Web Vitals and user retention'
+          ];
+          const gains = [
+            'delivering 8-figure savings through improved resource utilization',
+            'transforming user experience with instant feedback and responsiveness',
+            'enabling enterprise-scale operations with commodity hardware',
+            'establishing new performance benchmarks across industry',
+            'reducing infrastructure billing by $500K+ annually'
+          ];
+          const optimization = optimizations[Math.floor(Math.random() * optimizations.length)];
+          const gain = gains[Math.floor(Math.random() * gains.length)];
+          return `Optimized real-time execution environments ${optimization}, ${gain}.`;
+        }
+      ];
+
+      // Generate exactly 3 bullets with the specific structures
       for (let i = 0; i < 3; i++) {
-        // Get unique action verb
-        let verb = actionVerbs[Math.floor(Math.random() * actionVerbs.length)];
-        while (usedVerbs.has(verb) && usedVerbs.size < actionVerbs.length) {
-          verb = actionVerbs[Math.floor(Math.random() * actionVerbs.length)];
-        }
-        usedVerbs.add(verb);
-
-        // Get unique achievement
-        let achievement = achievements[Math.floor(Math.random() * achievements.length)];
-        while (usedAchievements.has(achievement) && usedAchievements.size < achievements.length) {
-          achievement = achievements[Math.floor(Math.random() * achievements.length)];
-        }
-        usedAchievements.add(achievement);
-
-        // Get random outcome
-        const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
-
-        bullets.push(`${verb} initiatives ${achievement}, ${outcome}.`);
+        bullets.push(bulletTemplates[i]());
       }
 
       return bullets;
